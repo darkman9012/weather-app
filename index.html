@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="card">
+    <div class="search">
+        <input type="text" placeholder="enter your city name" spellcheck="false">
+        <button> <img src="images/search.png" alt=""></button>
+    </div>
+    <div class="weather">
+        <img src="images/rain.png" alt="" class="weather-icon">
+        <h1 class="temp">22°c</h1>
+        <h2 class="city">new york</h2>
+        <div class="details">
+            <div class="col">
+                <img src="images/humidity.png" alt="">
+                <div>
+                    <p class="humidity">50%</p>
+                    <p>humidity</p>
+                </div>
+            </div>
+            <div class="col">
+                <img src="images/wind.png" alt="">
+                <div>
+                    <p class="wind">15 km/ph</p>
+                    <p>wind speed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const apikey="830e787ff6b83c2424ecefd1149c91e7";
+const apiUrl ="https://api.openweathermap.org/data/2.5/weather?units=metric&q=banglore";
+
+const searchbox = document.querySelector(".search input");
+const searchbtn = document.querySelector(".search button")
+
+async function checkweather(city){
+    const response = await fetch(apiUrl +city  +`&appid=${apikey}`);
+    var data = await response.json();
+
+    console.log(data);
+
+    document.querySelector(".city").innerHTML = data.name; 
+    document.querySelector(".temp").innerHTML = data.main.temp + "°c";
+    document.querySelector(".humidity").innerHTML = data.main.humidity +"%"; 
+    document.querySelector(".wind").innerHTML = data.wind.speed + "km/h"; 
+
+
+}
+searchbtn.addEventListener("click",()=>{
+    checkweather(searchbox.value);
+});
+</script>
+</body>
+</html>
